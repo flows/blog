@@ -2,7 +2,7 @@ title:       Markdown HTML Generator
 description: Generates HTML pages from markdown documents
 
 provider https://raw.github.com/psichi/chix-platform/master/nodes/{ns}/{name}.json
-provider ./graphs/{ns}/{name} as blog
+provider ./graphs/{ns}/{name}.fbp as blog
 
 BaseName(path/basename)
 Exists(fs/exists)
