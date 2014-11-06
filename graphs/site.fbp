@@ -45,8 +45,6 @@ Glob match -> file ReadFile out -> in Markdown
 Glob match -> path BaseName result -> name HtmlFile
 
 WriteFile :complete -> in WriteResults(object/group)
-WriteResults out -> :start Remove
-WriteResults out -> :start RemoveInsta
 Glob xmatch -> xin WriteResults
 
 HtmlFile file -> file WriteFile
@@ -63,15 +61,4 @@ Markdown out  -> in SiteTemplate
 
 SiteTemplate out -> in LayoutTemplate
 
-LayoutTemplate out -> in WriteFile # .. the write file of above
-
-# Move index to correct possition
-'./index.html'       ->   path Remove(fs/unlink) # can't overwrite somehow
-Remove :complete   -> :start Move
-'./site/index.html'  ->   from Move
-'./index.html'       ->     to Move
-
-'./index.html'          ->   path RemoveInsta(fs/unlink)
-RemoveInsta :complete   -> :start MoveInstagram
-'./site/instagram.html' ->   from MoveInstagram
-'./instagram.html'      ->     to MoveInstagram
+LayoutTemplate out -> in WriteFile
