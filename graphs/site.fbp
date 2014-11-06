@@ -60,7 +60,7 @@ HtmlFile file -> file WriteFile
 
 # TODO: sender should set persist, right now I also add it to the exposed port.
 # or maybe both should be able to set it, not sure.
-'./template/layout.hb' -> ^body Template
+'./template/layout.hb' -> ^file Template
 
 # I just need something accepting an object and to set a property on it.
 # defaulting to setting that property on an empty object, object/set
