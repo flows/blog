@@ -2,6 +2,7 @@ title:       Markdown HTML Generator
 description: Generates HTML pages from markdown documents
 
 provider https://raw.github.com/psichi/chix-platform/master/nodes/{ns}/{name}.json
+provider ./graphs/{ns}/{name} as blog
 
 BaseName(path/basename)
 Body(object/set)
@@ -12,12 +13,16 @@ MkDir(fs/mkdir)
 HtmlDir(data/string)
 HtmlFile(fs/file)
 ReadFile(fs/readFile)
-Layout(fs/readFile)
 Log(console/log)
 Markdown(template/markdown)
-HandleBars(template/handlebars)
 WriteFile(fs/writeFile)
 Move(fs/move), MoveInstagram(fs/move)
+
+Layout(fs/readFile)
+MainBody(object/set)
+HandleBars(template/handlebars)
+
+Template(blog:common/template)
 
 # store html dir name
 './site' -> in HtmlDir
@@ -51,7 +56,11 @@ Glob xmatch -> xin WriteResults
 HtmlFile file -> file WriteFile
 
 './template/site.hb'   -> file SiteFile(fs/readFile) out -> ^body SiteTemplate(template/handlebars)
-'./template/layout.hb' -> file Layout out -> ^body HandleBars
+#'./template/layout.hb' -> file Layout out -> ^body HandleBars
+
+# TODO: sender should set persist, right now I also add it to the exposed port.
+# or maybe both should be able to set it, not sure.
+'./template/layout.hb' -> ^body Template
 
 # I just need something accepting an object and to set a property on it.
 # defaulting to setting that property on an empty object, object/set
@@ -59,13 +68,15 @@ Markdown out  -> in Body
 'body'          -> ^key  Body  # not sure if the persist works, I think it does.
  Body out     -> vars SiteTemplate
 
-'body' -> ^key MainBody(object/set)
-SiteTemplate out -> in MainBody
-MainBody out     -> vars HandleBars
+'body' -> ^key MainBody
+# SiteTemplate out -> in MainBody
+SiteTemplate out -> in Template
+#MainBody out     -> vars HandleBars
 
 #Body out      -> vars HandleBars
 
-HandleBars out -> in WriteFile # .. the write file of above
+#HandleBars out -> in WriteFile # .. the write file of above
+Template out -> in WriteFile # .. the write file of above
 
 # Move index to correct possition
 './index.html'       ->   path Remove(fs/unlink) # can't overwrite somehow
