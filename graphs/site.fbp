@@ -11,13 +11,12 @@ HasDir(conditional/true)
 MkDir(fs/mkdir)
 HtmlDir(data/string)
 HtmlFile(fs/file)
-ReadFile(fs/readFile)
 Log(console/log)
-Markdown(template/markdown)
 WriteFile(fs/writeFile)
 
 LayoutTemplate(blog:common/template)
 SiteTemplate(blog:common/template)
+Markdown(blog:common/markdown)
 
 # store html dir name
 './site' -> in HtmlDir
@@ -42,7 +41,7 @@ HtmlDir out -> ^dir HtmlFile
 './site.md/*.md' -> match Glob
 
 # Create list of files stripped from the .md extension
-Glob match -> file ReadFile out -> in Markdown
+Glob match -> file Markdown
 Glob match -> path BaseName result -> name HtmlFile
 
 WriteFile :complete -> in WriteResults(object/group)
