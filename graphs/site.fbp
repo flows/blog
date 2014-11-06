@@ -17,7 +17,7 @@ Markdown(template/markdown)
 WriteFile(fs/writeFile)
 Move(fs/move), MoveInstagram(fs/move)
 
-Template(blog:common/template)
+LayoutTemplate(blog:common/template)
 SiteTemplate(blog:common/template)
 
 # store html dir name
@@ -55,15 +55,15 @@ HtmlFile file -> file WriteFile
 
 # TODO: sender should set persist, right now I also add it to the exposed port.
 # or maybe both should be able to set it, not sure.
-'./template/layout.hb' -> ^file Template
+'./template/layout.hb' -> ^file LayoutTemplate
 
 # I just need something accepting an object and to set a property on it.
 # defaulting to setting that property on an empty object, object/set
 Markdown out  -> in SiteTemplate
 
-SiteTemplate out -> in Template
+SiteTemplate out -> in LayoutTemplate
 
-Template out -> in WriteFile # .. the write file of above
+LayoutTemplate out -> in WriteFile # .. the write file of above
 
 # Move index to correct possition
 './index.html'       ->   path Remove(fs/unlink) # can't overwrite somehow
