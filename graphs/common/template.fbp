@@ -1,0 +1,17 @@
+title:       Template
+ns: common
+name: template
+description: Read Template and Process with Handlebars
+
+Layout(fs/readFile), MainBody(object/set), HandleBars(template/handlebars)
+
+# persist *must work*
+-> ^file Layout
+->    in MainBody
+
+'body' -> @key MainBody
+
+Layout out   -> ^body HandleBars
+MainBody out ->  vars HandleBars
+
+<- out HandleBars
