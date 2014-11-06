@@ -18,10 +18,6 @@ Markdown(template/markdown)
 WriteFile(fs/writeFile)
 Move(fs/move), MoveInstagram(fs/move)
 
-Layout(fs/readFile)
-MainBody(object/set)
-HandleBars(template/handlebars)
-
 Template(blog:common/template)
 
 # store html dir name
@@ -68,7 +64,6 @@ Markdown out  -> in Body
 'body'          -> ^key  Body  # not sure if the persist works, I think it does.
  Body out     -> vars SiteTemplate
 
-'body' -> ^key MainBody
 # SiteTemplate out -> in MainBody
 SiteTemplate out -> in Template
 #MainBody out     -> vars HandleBars
