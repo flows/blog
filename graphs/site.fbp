@@ -5,7 +5,6 @@ provider https://raw.github.com/psichi/chix-platform/master/nodes/{ns}/{name}.js
 provider ./graphs/{ns}/{name} as blog
 
 BaseName(path/basename)
-Body(object/set)
 Exists(fs/exists)
 Glob(fs/glob)
 HasDir(conditional/true)
@@ -19,6 +18,7 @@ WriteFile(fs/writeFile)
 Move(fs/move), MoveInstagram(fs/move)
 
 Template(blog:common/template)
+SiteTemplate(blog:common/template)
 
 # store html dir name
 './site' -> in HtmlDir
@@ -51,8 +51,7 @@ Glob xmatch -> xin WriteResults
 
 HtmlFile file -> file WriteFile
 
-'./template/site.hb'   -> file SiteFile(fs/readFile) out -> ^body SiteTemplate(template/handlebars)
-#'./template/layout.hb' -> file Layout out -> ^body HandleBars
+'./template/site.hb' -> ^file SiteTemplate
 
 # TODO: sender should set persist, right now I also add it to the exposed port.
 # or maybe both should be able to set it, not sure.
@@ -60,17 +59,10 @@ HtmlFile file -> file WriteFile
 
 # I just need something accepting an object and to set a property on it.
 # defaulting to setting that property on an empty object, object/set
-Markdown out  -> in Body
-'body'          -> ^key  Body  # not sure if the persist works, I think it does.
- Body out     -> vars SiteTemplate
+Markdown out  -> in SiteTemplate
 
-# SiteTemplate out -> in MainBody
 SiteTemplate out -> in Template
-#MainBody out     -> vars HandleBars
 
-#Body out      -> vars HandleBars
-
-#HandleBars out -> in WriteFile # .. the write file of above
 Template out -> in WriteFile # .. the write file of above
 
 # Move index to correct possition
