@@ -22,10 +22,12 @@ EnsureDir(blog:common/createDir)
 '.md' -> @ext BaseName
 
 # Create dir if doesn't exists
-HtmlDir out -> in EnsureDir out -> :start HtmlFile
+#HtmlDir out -> in EnsureDir out -> :start HtmlFile
+HtmlDir out -> in EnsureDir out -> ^dir HtmlFile
 
 # Html file creation
-HtmlDir out -> ^dir HtmlFile
+#HtmlDir out -> ^dir HtmlFile
+#HtmlDir out -> ^dir HtmlFile
 '.html' -> @ext HtmlFile
 
 # collect all markdown files

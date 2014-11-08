@@ -2,17 +2,11 @@ title: Mkdir if not exists
 ns: common
 name: createDir
 
-MkDir(fs/mkdir), HasDir(fs/exists), Complete(utils/dummy)
+MkDir(fs/mkdir), DirExists(fs/exists), Complete(utils/dummy)
 
-CopyPath(data/string) # temp sollution
+-> path:in DirExists
 
--> in CopyPath
-
-CopyPath out -> path HasDir
-HasDir no   -> :start MkDir
-HasDir yes  ->  in Complete
-
-# persist must work
-CopyPath out -> path MkDir :complete -> in Complete
+DirExists no    -> path MkDir path -> in Complete
+DirExists yes   -> in Complete
 
 <- out Complete
