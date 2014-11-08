@@ -6,7 +6,7 @@ provider ./graphs/{ns}/{name}.fbp as blog
 
 BaseName(path/basename)
 Glob(fs/glob)
-HtmlDir(data/string), HtmlFile(fs/file)
+HtmlFile(fs/file)
 Log(console/log)
 WriteFile(fs/writeFile)
 
@@ -15,19 +15,14 @@ SiteTemplate(blog:common/template)
 Markdown(blog:common/markdown)
 EnsureDir(blog:common/createDir)
 
-# store html dir name
-'./site' -> in HtmlDir
-
 # Removes the .md extension
 '.md' -> @ext BaseName
 
-# Create dir if doesn't exists
-#HtmlDir out -> in EnsureDir out -> :start HtmlFile
-HtmlDir out -> in EnsureDir out -> ^dir HtmlFile
+# Gives warning, iips for subgraph is already gone
+# Only happens with direct ip to subgraph
+'./site' -> in EnsureDir out -> ^dir HtmlFile
 
 # Html file creation
-#HtmlDir out -> ^dir HtmlFile
-#HtmlDir out -> ^dir HtmlFile
 '.html' -> @ext HtmlFile
 
 # collect all markdown files
