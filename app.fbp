@@ -3,6 +3,7 @@ title: Blog
 provider ./graphs/{ns}/{name}.fbp as blog
 
 Log(console/log)
+
 ReadTemplate(blog:common/template)
 
 './template/layout.hb' -> file ReadTemplate

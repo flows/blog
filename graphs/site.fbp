@@ -5,18 +5,15 @@ provider https://raw.github.com/psichi/chix-platform/master/nodes/{ns}/{name}.js
 provider ./graphs/{ns}/{name}.fbp as blog
 
 BaseName(path/basename)
-Exists(fs/exists)
 Glob(fs/glob)
-HasDir(conditional/true)
-MkDir(fs/mkdir)
-HtmlDir(data/string)
-HtmlFile(fs/file)
+HtmlDir(data/string), HtmlFile(fs/file)
 Log(console/log)
 WriteFile(fs/writeFile)
 
 LayoutTemplate(blog:common/template)
 SiteTemplate(blog:common/template)
 Markdown(blog:common/markdown)
+EnsureDir(blog:common/createDir)
 
 # store html dir name
 './site' -> in HtmlDir
@@ -25,13 +22,7 @@ Markdown(blog:common/markdown)
 '.md' -> @ext BaseName
 
 # Create dir if doesn't exists
-HtmlDir out -> path Exists exists -> in HasDir
-HasDir  no   -> :start MkDir
-HasDir  yes  -> :start HtmlFile
-MkDir :complete -> :start HtmlFile
-
-# persist will prevent input timeout also, todo, test that..
-HtmlDir out -> ^path MkDir
+HtmlDir out -> in EnsureDir out -> :start HtmlFile
 
 # Html file creation
 HtmlDir out -> ^dir HtmlFile

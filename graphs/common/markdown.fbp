@@ -3,8 +3,7 @@ description: Reads a markdown file and processes it
 ns: common
 name: markdown
 
-ReadFile(fs/readFile)
-Markdown(template/markdown)
+ReadFile(fs/readFile), Markdown(template/markdown)
 
 -> file ReadFile
 

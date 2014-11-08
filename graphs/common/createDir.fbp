@@ -1,64 +1,18 @@
-title:       Markdown HTML Generator
-description: Generates HTML pages from markdown documents
+title: Mkdir if not exists
+ns: common
+name: createDir
 
-provider https://raw.github.com/psichi/chix-platform/master/nodes/{ns}/{name}.json
-provider ./graphs/{ns}/{name}.fbp as blog
+MkDir(fs/mkdir), HasDir(fs/exists), Complete(utils/dummy)
 
-BaseName(path/basename)
-Glob(fs/glob)
-HtmlDir(data/string)
-HtmlFile(fs/file)
-ReadFile(fs/readFile)
-Log(console/log)
-Markdown(template/markdown)
-WriteFile(fs/writeFile)
+CopyPath(data/string) # temp sollution
 
-LayoutTemplate(blog:common/template)
-SiteTemplate(blog:common/template)
+-> in CopyPath
 
-Exists(fs/exists)
-HasDir(conditional/true)
-MkDir(fs/mkdir)
+CopyPath out -> path HasDir
+HasDir no   -> :start MkDir
+HasDir yes  ->  in Complete
 
-# store html dir name
-'./site' -> in HtmlDir
+# persist must work
+CopyPath out -> path MkDir :complete -> in Complete
 
-# Removes the .md extension
-'.md' -> @ext BaseName
-
-# Create dir if doesn't exists
-HtmlDir out -> path Exists exists -> in HasDir
-HasDir  no  -> :start MkDir
-
-# persist will prevent input timeout also, todo, test that..
-HtmlDir out -> ^path MkDir
-
-# Html file creation
-HtmlDir out -> ^dir HtmlFile
-'.html' -> @ext HtmlFile
-
-# collect all markdown files
-'./site.md/*.md' -> match Glob
-
-# Create list of files stripped from the .md extension
-Glob match -> file ReadFile out -> in Markdown
-Glob match -> path BaseName result -> name HtmlFile
-
-WriteFile :complete -> in WriteResults(object/group)
-Glob xmatch -> xin WriteResults
-
-HtmlFile file -> file WriteFile
-
-'./template/site.hb' -> ^file SiteTemplate
-
-# TODO: sender should set persist, right now I also add it to the exposed port.
-# or maybe both should be able to set it, not sure.
-'./template/layout.hb' -> ^file LayoutTemplate
-
-# I just need something accepting an object and to set a property on it.
-# defaulting to setting that property on an empty object, object/set
-Markdown out  -> in SiteTemplate
-
-SiteTemplate out -> in LayoutTemplate
-
-LayoutTemplate out -> in WriteFile
+<- out Complete
