@@ -1,8 +1,12 @@
 title:       Markdown HTML Generator
+ns: rh
+name: site
 description: Generates HTML pages from markdown documents
 
 provider https://raw.github.com/psichi/chix-platform/master/nodes/{ns}/{name}.json
-provider ./graphs/{ns}/{name}.fbp as blog
+
+# TODO: Rethink provider & import thing
+provider ./graphs/rh/{ns}/{name}.fbp as blog
 
 BaseName(path/basename)
 Glob(fs/glob)
@@ -15,21 +19,21 @@ SiteTemplate(blog:common/template)
 Markdown(blog:common/markdown)
 EnsureDir(blog:common/createDir)
 
+# collect all markdown files
+-> match:pattern Glob
+-> in:dir EnsureDir out -> ^dir HtmlFile
+-> ^file:siteTemplate SiteTemplate
+-> ^file:layoutTemplate LayoutTemplate
+
 # Removes the .md extension
 '.md' -> @ext BaseName
-
-# Gives warning, iips for subgraph is already gone
-# Only happens with direct ip to subgraph
-'./site' -> in EnsureDir out -> ^dir HtmlFile
 
 # Html file creation
 '.html' -> @ext HtmlFile
 
-# collect all markdown files
-'./site.md/*.md' -> match Glob
-
 # Create list of files stripped from the .md extension
 Glob match -> file Markdown
+
 Glob match -> path BaseName result -> name HtmlFile
 
 WriteFile :complete -> in WriteResults(object/group)
@@ -37,14 +41,6 @@ Glob xmatch -> xin WriteResults
 
 HtmlFile file -> file WriteFile
 
-'./template/site.hb' -> ^file SiteTemplate
-
-# TODO: sender should set persist, right now I also add it to the exposed port.
-# or maybe both should be able to set it, not sure.
-'./template/layout.hb' -> ^file LayoutTemplate
-
-# I just need something accepting an object and to set a property on it.
-# defaulting to setting that property on an empty object, object/set
 Markdown out  -> in SiteTemplate
 
 SiteTemplate out -> in LayoutTemplate

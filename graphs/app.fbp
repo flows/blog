@@ -1,0 +1,17 @@
+title: Blog Generator
+
+provider ./graphs/{ns}/{name}.fbp as app
+
+App(app:rh/site)
+
+# target directory
+'site' -> dir App
+
+# Matching pattern for markdown files
+'./site.md/*.md' -> pattern App
+
+# The handlebars site template to use
+'./template/site.hb' -> siteTemplate App
+
+# The handlebars layout template to use
+'./template/layout.hb' -> layoutTemplate App
