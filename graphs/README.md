@@ -2,4 +2,4 @@
 
 Generates Blog pages
 
-![Blog Generator](https://raw.githubusercontent.com/flows/blog/master/graphs/rh/app.png)
+![Blog Generator](https://raw.githubusercontent.com/flows/blog/master/graphs/app.png)
