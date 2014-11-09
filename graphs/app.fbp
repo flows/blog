@@ -7,10 +7,10 @@ App(app:rh/site)
 # target directory
 'site' -> dir App
 
-# Matching pattern for markdown files
+# @pattern:App Pattern - Matching pattern for markdown files
 './site.md/*.md' -> pattern App
 
-# The handlebars site template to use
+# @siteTemplate:App Site Template - The handlebars site template to use
 './template/site.hb' -> siteTemplate App
 
 # The handlebars layout template to use
