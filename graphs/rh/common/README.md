@@ -1,6 +1,6 @@
-# Template
+# rh.common
 
-Read Template and Process with Handlebars
+Common graphs
 
 ### Mkdir if not exists (common/createDir)
 
