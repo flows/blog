@@ -2,16 +2,16 @@ title: Blog Generator
 
 provider ./graphs/{ns}/{name}.fbp as app
 
-App(app:rh/site)
+Site(app:rh/site)
 
 # target directory
-'site' -> @dir App
+'html' -> dir Site
 
-# @pattern:App Pattern - Matching pattern for markdown files
-'./site.md/*.md' -> pattern App
+# @pattern:Site Pattern - Matching pattern for markdown files
+'./site.md/*.md' -> pattern Site
 
-# @siteTemplate:App Site Template - The handlebars site template to use
-'./template/site.hb' -> siteTemplate App
+# @siteTemplate:Site Site Template - The handlebars site template to use
+'./template/site.hb' -> siteTemplate Site
 
 # The handlebars layout template to use
-'./template/layout.hb' -> layoutTemplate App
+'./template/layout.hb' -> layoutTemplate Site
