@@ -3,7 +3,7 @@ ns: rh
 name: site
 description: Generates HTML pages from markdown documents
 
-provider https://raw.github.com/psichi/chix-platform/master/nodes/{ns}/{name}.json
+#provider https://raw.github.com/psichi/chix-platform/master/nodes/{ns}/{name}.json
 
 # TODO: Rethink provider & import thing
 provider ./graphs/rh/{ns}/{name}.fbp as blog

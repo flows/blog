@@ -9,7 +9,7 @@ Layout(fs/readFile), MainBody(object/set), HandleBars(template/handlebars)
 -> ^file Layout
 ->    in MainBody
 
-'body' -> @key MainBody
+'body' -> @path MainBody
 
 Layout out   -> ^body HandleBars
 MainBody out ->  vars HandleBars
