@@ -14,7 +14,6 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/languages/javascript.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/languages/coffeescript.min.js"></script>
-  <script src="/js/stroll.js"></script>
   <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -36,12 +35,7 @@
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="/">Home</a></li>
-          <!-- li><a href="/blog/index.html">Articles</a></li -->
-          <li><a href="/examples/">Examples</a></li>
-          <li><a href="/packages/">Packages</a></li>
-          <!-- li><a href="/ui/">Live!</a></li -->
-          <!-- li><a href="/site/about.html">About</a></li -->
-          <!-- li><a href="/site/contact.html">Contact</a></li -->
+          <li><a href="/about">About</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
